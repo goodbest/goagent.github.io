@@ -33,26 +33,12 @@
         <h1>
 <a name="dont-panic" class="anchor" href="#dont-panic"><span class="octicon octicon-link"></span></a>Don't Panic</h1>
 
-<h3>
-<a name="multiple-platform" class="anchor" href="#multiple-platform"><span class="octicon octicon-link"></span></a>Multiple Platform</h3>
-
-<p>Local(Windows/MacOS/Linux)<br/>Server(GAE/WSGI/PHP).</p>
-
-<h3>
-<a name="open-source" class="anchor" href="#open-source"><span class="octicon octicon-link"></span></a>Open Source</h3>
-
-<p>Open Source under GPLv2<br/>Local(proxy.py/proxy.ini)<br/>Server(wsgi.py/index.php/inde.py)<br/>Shell(taskbar/goagent-gtk.py/goagent-osx.command)</p>
-
-<h3>
-<a name="fast" class="anchor" href="#fast"><span class="octicon octicon-link"></span></a>Fast</h3>
-
-<p>Focus on performance and availability<br/>Specific protocol.</p>
-
-<h3>
-<a name="flexible" class="anchor" href="#flexible"><span class="octicon octicon-link"></span></a>Flexible</h3>
-
-<p>Green packages<br/>Flexible configurations.</p>
-
+<div id="latest-commits-widget">
+    <div id="latest-commits-header">
+      <h4>Latest Commits</h4>
+    </div>
+    <ul id="commit-history"></ul>
+</div>
 
 <p>This is a <a href="https://twitter.com/phuslu">@phuslu</a> <a href="https://twitter.com/hewigovens ">@hewigovens</a> joint.</p>
       </section>
@@ -123,6 +109,38 @@
             header p.view a small:before { content: 'at http://github.com/'; }
         }
     </style>
+    <script src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+      (function(repo, branch, limit) {
+        var callback, container, repo, url, username;
+        container = $('#latest-commits-widget')
+        callback = function(response) {
+          var ul;
+          response = response.data;
+          ul = $('#commit-history');
+          $(ul).empty;
+          return $(response).each(function(index, result) {
+            if (result.author != null) {
+              return $(ul).append("<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/" + repo + "/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>");
+            }
+          });
+        };
+        container.find('h4').text("Latest Commits to " + repo);
+        url = "https://api.github.com/repos/" + repo + "/commits?callback=callback";
+        if (branch != null) {
+          url += "&sha=" + branch;
+        }
+        return $.ajax(url, {
+          data: {
+            per_page: limit
+          },
+          dataType: "jsonp",
+          type: "get"
+        }).success(function(response) {
+          return callback(response);
+        });
+      })('goagent/goagent', '3.0', 10);
+    </script>
     <!--[if !IE]>
         <script>
         fixScale = function(doc) {
