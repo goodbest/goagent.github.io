@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
   <head>
@@ -109,38 +110,21 @@
             header p.view a small:before { content: 'at http://github.com/'; }
         }
     </style>
-    <script src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
     <script>
-      (function(repo, branch, limit) {
-        var callback, container, repo, url, username;
-        container = $('#latest-commits-widget')
-        callback = function(response) {
-          var ul;
-          response = response.data;
-          ul = $('#commit-history');
-          $(ul).empty;
-          return $(response).each(function(index, result) {
-            if (result.author != null) {
-              return $(ul).append("<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/" + repo + "/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>");
+        function commithistory(response) {
+            var ul;
+            response = response.data;
+            ul = document.getElementById('commit-history');
+            ul.innerHTML = '';
+            for (var i = 0; i < response.length; i++) {
+                result = response[i];
+                if (result.author != null) {
+                    ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/goagent/goagent/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
+                }
             }
-          });
-        };
-        container.find('h4').text("Latest Commits to " + repo);
-        url = "https://api.github.com/repos/" + repo + "/commits?callback=callback";
-        if (branch != null) {
-          url += "&sha=" + branch;
         }
-        return $.ajax(url, {
-          data: {
-            per_page: limit
-          },
-          dataType: "jsonp",
-          type: "get"
-        }).success(function(response) {
-          return callback(response);
-        });
-      })('goagent/goagent', '3.0', 10);
     </script>
+    <script src="https://api.github.com/repos/goagent/goagent/commits?callback=commithistory"></script>
     <!--[if !IE]>
         <script>
         fixScale = function(doc) {
