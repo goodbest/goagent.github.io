@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
   <head>
@@ -135,15 +136,18 @@
         </script>
     <![endif]-->
     <script>
+    var repo = 'goagent/goagent';
     function commithistory(response) {
         var ul = document.getElementById('commit-history');
         ul.innerHTML = '';
         for (var i = 0; i < response.data.length; i++) {
             result = response.data[i];
-            ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/goagent/goagent/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
+            ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/" + repo + "/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
         }
     }
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://api.github.com/repos/' + repo + '/commits?callback=commithistory');
+    document.getElementsByTagName('head')[0].appendChild(script);
     </script>
-    <script src="https://api.github.com/repos/goagent/goagent/commits?callback=commithistory"></script>
   </body>
 </html>
