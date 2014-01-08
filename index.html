@@ -110,21 +110,6 @@
             header p.view a small:before { content: 'at http://github.com/'; }
         }
     </style>
-    <script>
-        function commithistory(response) {
-            var ul;
-            response = response.data;
-            ul = document.getElementById('commit-history');
-            ul.innerHTML = '';
-            for (var i = 0; i < response.length; i++) {
-                result = response[i];
-                if (result.author != null) {
-                    ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/goagent/goagent/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
-                }
-            }
-        }
-    </script>
-    <script src="https://api.github.com/repos/goagent/goagent/commits?callback=commithistory"></script>
     <!--[if !IE]>
         <script>
         fixScale = function(doc) {
@@ -150,5 +135,18 @@
         fixScale(document);
         </script>
     <![endif]-->
+    <script>
+        function commithistory(response) {
+            var ul = document.getElementById('commit-history');
+            ul.innerHTML = '';
+            for (var i = 0; i < response.data.length; i++) {
+                result = response.data[i];
+                if (result.author == null)
+                    continue;
+                ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toLocaleDateString('en-US') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/goagent/goagent/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
+            }
+        }
+    </script>
+    <script src="https://api.github.com/repos/goagent/goagent/commits?callback=commithistory"></script>
   </body>
 </html>
