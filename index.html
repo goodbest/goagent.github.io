@@ -143,7 +143,7 @@
         ul.innerHTML = '';
         for (var i = 0; i < response.data.length; i++) {
             result = response.data[i];
-            ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toISOString().replace(/T.+$/, '') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/" + repo + "/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
+            ul.innerHTML += "<li class=\"clearfix\">\n<div>\n" + new Date(result.commit.committer.date).toISOString().replace(/T.+$/, '').replace(/\d+\-(\d+)-(\d+)/, '$1/$2') + "&nbsp; <a class=\"commit-message\" href=\"https://github.com/" + repo + "/commit/" + result.sha + "\" target=\"_blank\">" + result.commit.message + "</a> \n </div>\n</li>";
         }
     }
     var script = document.createElement('script');
