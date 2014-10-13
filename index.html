@@ -3,34 +3,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
     <link rel="stylesheet" href="github-markdown.css">
-    <style>body {min-width: 200px; max-width: 790px; margin: 0 auto;	padding: 30px;}</style>
+    <style>body {min-width: 200px; max-width: 790px; margin: 0 auto;  padding: 30px;}</style>
     <script src="marked.js"></script>
   </head>
   <body>
-  	<div id="content" class="markdown-body"></div>
+    <div id="content" class="markdown-body"></div>
     <script>
     (function() {
-      if (document.location.href.indexOf("http://") == 0) {
-        document.location = "https://goagent.github.io";
-      } else {
+        if (document.location.href.indexOf("http://") == 0) {
+          document.location = "https://goagent.github.io";
+          return;
+        }
         if (window.XMLHttpRequest) {
             var request = new XMLHttpRequest();
         } else {
             var request = new ActiveXObject("Microsoft.XMLHTTP");
         }
+        request.onreadystatechange = callback;
         request.open('GET', './README.md', true);
-        request.onload = function() {
-          if (request.status >= 200 && request.status < 400){
-            document.getElementById("content").innerHTML = marked(request.responseText);
-          } else {
-            document.location = "https://github.com/goagent/goagent";
-          }
-        };
-        request.onerror = function() {
-          document.location = "https://github.com/goagent/goagent";
-        };
         request.send();
-      }
+        function callback() {
+          if (request.readyState == 4) {
+            if (request.status >= 200 && request.status < 400){
+              document.getElementById("content").innerHTML = marked(request.responseText);
+            } else {
+              document.location = "https://github.com/goagent/goagent";
+            }
+          }
+        }
     })();
     </script>
   </body>
