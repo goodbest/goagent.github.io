@@ -3,18 +3,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
     <link rel="stylesheet" href="github-markdown.css">
-    <style>
-    	body {
-    		min-width: 200px;
-    		max-width: 790px;
-    		margin: 0 auto;
-    		padding: 30px;
-    	}
-    </style>
+    <style>body {min-width: 200px; max-width: 790px; margin: 0 auto;	padding: 30px;}</style>
     <script src="marked.js"></script>
   </head>
   <body>
-  	<div id="markdown-div" class="markdown-body"></div>
     <textarea id="markdown-text" style="display:none">
 goagent 3.2.0 正式版下载 [http://git.io/goa](https://nodeload.github.com/goagent/goagent/legacy.zip/3.0)
 
@@ -46,6 +38,7 @@ goagent 3.2.0 正式版下载 [http://git.io/goa](https://nodeload.github.com/go
 ## 更新历史
 * https://github.com/goagent/goagent/blob/wiki/History.md
     </textarea>
+  	<div id="markdown-div" class="markdown-body"></div>
     <script>
     (function() {
       document.getElementById("markdown-div").innerHTML = marked(document.getElementById("markdown-text").value);
