@@ -43,9 +43,8 @@ goagent 3.2.0 正式版下载 [http://git.io/goa](https://nodeload.github.com/go
     (function() {
       if (document.location.protocol == "http:") {
         document.location.protocol = "https:";
-      } else {
-        document.getElementById("markdown-div").innerHTML = marked(document.getElementById("markdown-text").value);
       }
+      document.getElementById("markdown-div").innerHTML = marked(document.getElementById("markdown-text").value);
     })();
     </script>
   </body>
