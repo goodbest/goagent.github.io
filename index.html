@@ -1,10 +1,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="import" href="x-marked.html">
+    <script src="marked.js"></script>
+    <link rel="stylesheet" href="github-markdown.css">
   </head>
   <body>
-    <x-marked data-apply-style>
+  	<div id="markdown-div"></div>
+    <textarea id="markdown-text" style="display:none">
 goagent 3.2.0 正式版下载 [http://git.io/goa](https://nodeload.github.com/goagent/goagent/legacy.zip/3.0)
 
 ## 简易教程
@@ -34,8 +36,11 @@ goagent 3.2.0 正式版下载 [http://git.io/goa](https://nodeload.github.com/go
 
 ## 更新历史
 * https://github.com/goagent/goagent/blob/wiki/History.md
-
-
-    </x-marked>
+    </textarea>
+    <script>
+    (function() {
+      document.getElementById("markdown-div").innerHTML = marked(document.getElementById("markdown-text").value);
+    })();
+    </script>
   </body>
 </html>
